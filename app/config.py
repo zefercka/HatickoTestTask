@@ -12,16 +12,18 @@ class Settings(BaseSettings):
     ACCESS_SECRET_KEY: str
     IMEI_CHECK_TOKEN: str
     model_config = SettingsConfigDict(
-        env_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env")
+        env_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
     )
     
 
 class Constants:
-    IMEI_SERVICE_ID = 12
+    IMEI_SERVICE_ID = 15
     IMEI_BASE_URL = 'https://api.imeicheck.net/v1/checks'
     
     JWT_ALGORITHM = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 30
+    
+    LEVEL_TO_REG = 5
 
 
 

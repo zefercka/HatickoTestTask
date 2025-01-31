@@ -14,6 +14,8 @@ HEADERS = {
 
 
 async def validate_imei_schema(data: dict) -> ImeiInfo:
+    print(data)
+    
     data = data['properties']
     model = ImeiInfo(
         device_name=data['deviceName'] if 'deviceName' in data else None,
@@ -37,6 +39,8 @@ async def validate_imei_schema(data: dict) -> ImeiInfo:
         usa_block_status=data['usaBlockStatus'] if 'usaBlockStatus' in data else None,
         network=data['network'] if 'network' in data else None,
     )
+    
+    print(model)
     
     return model
 

@@ -7,6 +7,7 @@ class User(BaseModel):
     username: str
     email: str
     token: Optional[str]
+    level_permission: int
     
     class Config:
         from_attributes = True

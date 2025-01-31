@@ -4,8 +4,8 @@ from pydantic import BaseModel, EmailStr, Field
 
 
 class Authorization(BaseModel):
-    login: str
-    password: str
+    login: Annotated[str, Field(min_length=4, max_length=256)]
+    password: Annotated[str, Field(min_length=8, max_length=32)]
 
 
 class Registration(BaseModel):

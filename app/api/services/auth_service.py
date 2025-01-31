@@ -1,11 +1,12 @@
 import re
 
 from app.api.dependecies.database import get_db
-from app.api.dependecies.exceptions import (InternalServerError,
-                                            InvalidToken, TokenExpired,
-                                            UserNotFound, TokenRevoked)
+from app.api.dependecies.exceptions import (InternalServerError, InvalidToken,
+                                            NoPermissions, TokenExpired,
+                                            TokenRevoked, UserNotFound)
 from app.api.schemas.auth_schema import Authorization, Registration
 from app.api.schemas.user_schema import User
+from app.config import constants
 from app.logger import logger
 from fastapi import Depends, HTTPException, Security, status
 from fastapi.security import APIKeyHeader
@@ -41,7 +42,11 @@ async def authorize_user(db: AsyncSession, data: Authorization) -> User:
     return user
 
 
-async def register_user(db: AsyncSession, registration_form: Registration) -> User:
+async def register_user(db: AsyncSession, registration_form: Registration,
+                        current_user: User) -> User:
+    if current_user.level_permission < constants.LEVEL_TO_REG:
+        raise NoPermissions
+    
     try:
         is_unique_user = \
             False if await crud.get_user_by_email(db, registration_form.email) or \

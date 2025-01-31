@@ -47,3 +47,11 @@ class InternalServerError(HTTPException):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error"
         )
+        
+
+class NoPermissions(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Forbidden"
+        )

@@ -11,3 +11,4 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(256))
     password_hash: Mapped[str]
     token: Mapped[str] = mapped_column(unique=True, nullable=True)
+    level_permission: Mapped[int] = mapped_column(nullable=False, server_default="1")

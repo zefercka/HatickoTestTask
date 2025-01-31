@@ -15,5 +15,7 @@ async def login(auth_form: Authorization, db: AsyncSession = Depends(get_db)):
     
 
 @app.post("/register", response_model=User)
-async def register(reg_form: Registration, db: AsyncSession = Depends(get_db)):
-    return await auth_service.register_user(db, reg_form)
+async def register(reg_form: Registration, 
+                   current_user: User = Depends(auth_service.get_current_user),
+                   db: AsyncSession = Depends(get_db)):
+    return await auth_service.register_user(db, reg_form, current_user)
