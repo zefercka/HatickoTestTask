@@ -1,7 +1,0 @@
-fastapi[all]
-asyncpg==0.30.0
-sqlalchemy==2.0.37
-requests==2.3.0
-pyjwt==2.10.1
-bcrypt==4.2.1
-pydantic-settings==2.7.1

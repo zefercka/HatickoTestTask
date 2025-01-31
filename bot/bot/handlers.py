@@ -2,7 +2,7 @@ from aiogram import F, Router
 from aiogram.types import Message
 from aiogram.filters import Command
 
-from .services import start, login, imei, add, delete, list_s
+from bot.services import start, login, imei, add, delete, list_s
 
 from bot.config import settings
 

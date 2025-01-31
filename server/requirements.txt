@@ -1,0 +1,8 @@
+fastapi[all]
+asyncpg
+sqlalchemy
+requests
+pyjwt
+bcrypt
+pydantic-settings
+passlib

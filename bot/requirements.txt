@@ -1,0 +1,5 @@
+asyncpg
+sqlalchemy
+requests
+aiogram
+pydantic-settings

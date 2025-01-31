@@ -1,0 +1,116 @@
+services:
+  db_server:
+    container_name: db_server
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hatiko
+      POSTGRES_LOGGING: DEBUG
+    ports:
+      - 5434:5432
+    volumes:
+      - ./server/hatiko_server_backup.backup:/backup/hatiko_server_backup.backup
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    command: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d hatiko" ]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+    restart: unless-stopped
+
+  server:
+    container_name: server
+    build:
+      context: ./server
+      dockerfile: dockerfile
+    command: bash -c 'while !</dev/tcp/db_server/5432; do sleep 1; done; uvicorn app.main:app --host 0.0.0.0'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - ./server:/app
+    networks:
+      - app-network
+    ports:
+      - 8000:8000
+    environment:
+      DB_HOST: db_server
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: hatiko
+      ACCESS_SECRET_KEY: cfbb81f1e63e3d97b8a77563a7f4f53343faa79df42039c4d5cf40c25be4127a3c03b4977819f1cf1c4c83834722b7bed2f56af440a2637ff69e8786ef0b1d4a2a35690643e43a1fdc5532790335248a159205af24d5cbeb553d5b3bdeca48978b6d5e4f78b8f48007135ac95c27a1aa6c46553e5bb641abd52da4a1d3165b22
+    env_file:
+      - .env
+    depends_on:
+      db_server:
+        condition: service_healthy
+  db_bot:
+    container_name: db_bot
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hatikoBot
+      POSTGRES_LOGGING: DEBUG
+    ports:
+      - 5435:5432
+    volumes:
+      - ./bot/hatiko_bot_backup.backup:/backup/hatiko_bot_backup.backup
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    command: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d hatikoBot" ]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+    restart: unless-stopped
+  bot:
+    container_name: bot
+    build:
+      context: ./bot
+      dockerfile: dockerfile
+    command: bash -c 'while !</dev/tcp/db_bot/5432; do sleep 1; done; python -m bot.main'
+    networks:
+      - app-network
+    ports:
+      - 8002:8002
+    environment:
+      DB_BOT_HOST: db_bot
+      DB_BOT_PORT: 5432
+      DB_BOT_USER: postgres
+      DB_BOT_PASSWORD: postgres
+      DB_BOT_NAME: hatikoBot
+    env_file:
+      - .env
+    depends_on:
+      db_bot:
+        condition: service_healthy
+  
+networks:
+  app-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450

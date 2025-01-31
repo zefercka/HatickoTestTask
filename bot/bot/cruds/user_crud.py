@@ -1,10 +1,8 @@
-from app.logger import logger
+from bot.config import constants
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..models.user_model import User
-
-from bot.config import constants
 
 
 async def get_user_by_id(db: AsyncSession, user_id: int) -> User | None:

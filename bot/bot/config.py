@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     
 
 class Constants:
-    BASE_API_URL = 'http://127.0.0.1:8000/api'
+    BASE_API_URL = 'http://server:8000/api'
     IMEI_API_ROUTE = '/imei'
     
     LEVEL_TO_ADD = 5
