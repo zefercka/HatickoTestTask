@@ -1,0 +1,96 @@
+{
+    "!!! WARNING !!!": "YOU ARE USING SANDBOX ENVIRONMENT WITH TEST DATA. FOR SWITCHING TO LIVE MODE VISIT THE FOLLOWING LINK: https://imeicheck.net/developer-api",
+    "id": "LnPpGOH8clBqOurb",
+    "type": "api",
+    "status": "successful",
+    "orderId": null,
+    "service": {
+        "id": 12,
+        "title": "Mock service with only successful results"
+    },
+    "amount": "0.00",
+    "deviceId": "490154203237518",
+    "processedAt": 1738318782,
+    "properties": {
+        "deviceName": "iPhone XS Max 256GB Gold A1921 US/Canada",
+        "image": "https://sources.imeicheck.net/images/481ce7e59b3efccfb9122fb0ff53df8c.png",
+        "imei": "490154203237518",
+        "meid": "49015420323751",
+        "imei2": "491927532646843",
+        "serial": "GTFRJ1Y9P6QB",
+        "estPurchaseDate": 1649916588,
+        "simLock": true,
+        "warrantyStatus": "Apple Limited Warranty",
+        "technicalSupport": true,
+        "modelDesc": "IPHONE 12 BLACK 64GB-JPN",
+        "purchaseCountry": "United States",
+        "apple/region": "AT&T USA",
+        "fmiOn": false,
+        "lostMode": true
+    }
+}
+
+
+{
+    "!!! WARNING !!!": "YOU ARE USING SANDBOX ENVIRONMENT WITH TEST DATA. FOR SWITCHING TO LIVE MODE VISIT THE FOLLOWING LINK: https://imeicheck.net/developer-api",
+    "id": "WxCdYx6CkqOQWQUb",
+    "type": "api",
+    "status": "successful",
+    "orderId": null,
+    "service": {
+      "id": 13,
+      "title": "Mock service with 10% of unsuccess results"
+    },
+    "amount": "0.00",
+    "deviceId": "490154203237518",
+    "processedAt": 1738318908,
+    "properties": {
+      "deviceName": "MacBook (13-inch, Aluminum, Late 2008)",
+      "image": "https://sources.imeicheck.net/images/481ce7e59b3efccfb9122fb0ff53df8c.png",
+      "imei": "490154203237518",
+      "meid": "49015420323751",
+      "imei2": "805485422550211",
+      "serial": "CVR01292FSJ8G4",
+      "estPurchaseDate": 1674077396,
+      "gsmaBlacklisted": false,
+      "repairCoverage": true,
+      "technicalSupport": true,
+      "replacement": false,
+      "apple/region": "Verizon USA",
+      "fmiOn": false,
+      "lostMode": false
+    }
+}
+
+
+{
+    "!!! WARNING !!!": "YOU ARE USING SANDBOX ENVIRONMENT WITH TEST DATA. FOR SWITCHING TO LIVE MODE VISIT THE FOLLOWING LINK: https://imeicheck.net/developer-api",
+    "id": "PEJ4bcE_YNR-gVTn",
+    "type": "api",
+    "status": "unsuccessful",
+    "orderId": null,
+    "service": {
+      "id": 14,
+      "title": "Mock service with only unsuccessful results"
+    },
+    "amount": "0.00",
+    "deviceId": "490154203237518",
+    "processedAt": 1738319001,
+    "properties": []
+}
+
+{
+    "!!! WARNING !!!": "YOU ARE USING SANDBOX ENVIRONMENT WITH TEST DATA. FOR SWITCHING TO LIVE MODE VISIT THE FOLLOWING LINK: https://imeicheck.net/developer-api",
+    "id": "aVgClx8wHm6fFW8_",
+    "type": "api",
+    "status": "failed",
+    "orderId": null,
+    "service": {
+      "id": 15,
+      "title": "Mock (50% success, 25% unsuccess, 25% fails)"
+    },
+    "amount": "0.00",
+    "deviceId": "13422345434",
+    "processedAt": 1738319734,
+    "properties": []
+  }
