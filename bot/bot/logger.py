@@ -17,7 +17,7 @@ def run_logger(name):
     )
     
     file_handler = logging.FileHandler(
-        f'{os.path.dirname(os.path.realpath(__file__))}/logs/{datetime.now().strftime("%d-%m-%Y")}.log'
+        f'./logs/{datetime.now().strftime("%d-%m-%Y")}.log'
     )
     file_handler.setFormatter(formatter)
     
