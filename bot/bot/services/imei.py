@@ -3,7 +3,7 @@ import re
 from datetime import datetime
 
 import requests
-from aiogram.types import Message, InputFile
+from aiogram.types import Message
 from bot.config import constants
 from bot.logger import logger
 

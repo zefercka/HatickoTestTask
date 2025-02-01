@@ -1,13 +1,12 @@
 from datetime import datetime
 from typing import Annotated
 
+from bot.config import get_db_url
 from sqlalchemy import func
 from sqlalchemy.ext.asyncio import (AsyncAttrs, async_sessionmaker,
                                     create_async_engine)
 from sqlalchemy.orm import (DeclarativeBase, Mapped, declared_attr,
                             mapped_column)
-
-from bot.config import get_db_url
 
 SQLALCHEMY_DATABASE_URL = get_db_url()
 

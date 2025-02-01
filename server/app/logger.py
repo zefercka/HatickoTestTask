@@ -4,6 +4,9 @@ from datetime import datetime
 
 
 def run_logger(name):
+    if not os.path.isdir('logs'):
+        os.mkdir('logs')
+    
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
     

@@ -1,10 +1,7 @@
-from aiogram import F, Router
-from aiogram.types import Message
+from aiogram import Router
 from aiogram.filters import Command
-
-from bot.services import start, login, imei, add, delete, list_s
-
-from bot.config import settings
+from aiogram.types import Message
+from bot.services import add, delete, imei, list_s, login, start
 
 router = Router()
 

@@ -2,9 +2,10 @@ import json
 
 import requests
 from app.config import constants, settings
-from sqlalchemy.ext.asyncio import AsyncSession
+from app.logger import logger
 
-from ..dependecies.exceptions import RequestExternalAPIFailed
+from ..dependecies.exceptions import (InternalServerError,
+                                      RequestExternalAPIFailed)
 from ..schemas.imei_schema import ImeiInfo
 
 HEADERS = {
@@ -14,8 +15,6 @@ HEADERS = {
 
 
 async def validate_imei_schema(data: dict) -> ImeiInfo:
-    print(data)
-    
     data = data['properties']
     model = ImeiInfo(
         device_name=data['deviceName'] if 'deviceName' in data else None,
@@ -40,8 +39,6 @@ async def validate_imei_schema(data: dict) -> ImeiInfo:
         network=data['network'] if 'network' in data else None,
     )
     
-    print(model)
-    
     return model
 
 
@@ -52,12 +49,16 @@ async def check_imei(imei: str):
     }
     body = json.dumps(body)
     
-    response = requests.post(
-        url=constants.IMEI_BASE_URL,
-        headers=HEADERS,
-        data=body
-    )
-    response_json = json.loads(response.text)
+    try:
+        response = requests.post(
+            url=constants.IMEI_BASE_URL,
+            headers=HEADERS,
+            data=body
+        )
+        response_json = json.loads(response.text)
+    except Exception as err:
+        logger.error(err, exc_info=True)
+        raise InternalServerError
     
     if response_json['status'] in ['failed', 'unsuccessful']:
         raise RequestExternalAPIFailed

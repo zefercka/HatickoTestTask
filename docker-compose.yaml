@@ -108,6 +108,8 @@ services:
     depends_on:
       db_bot:
         condition: service_healthy
+      server:
+        condition: service_healthy
   
 networks:
   app-network:
