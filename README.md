@@ -1,5 +1,103 @@
-docker-compose up -d --build
-docker exec -it db_server pg_restore -U postgres -d hatiko /backup/hatiko_server_backup.backup
-docker exec -it db_bot pg_restore -U postgres -d hatikoBot /backup/hatiko_bot_backup.backup
-docker start server
-docker start bot
+# Haticko Test Task
+
+1. **Склонируйте репозиторий:**
+
+   ```bash
+   git clone https://github.com/zefercka/HatickoTestTask.git
+   cd HatickoTestTask
+   ```
+2. **Создайте .env файл:**
+
+   В корне проекта создайте файл `.env` и добавьте в него следующие переменные:
+
+   ```env
+   ADMIN_ID=[ваш телеграмм ID]
+   TELEGRAM_TOKEN=[токен бота]
+   IMEI_CHECK_TOKEN=[токен IMEI CHECK]
+   ```
+
+   IMEI_CHECK_TOKEN - токен для взаимодействия с API https://imeicheck.net
+3. **Соберите и запустите контейнеры:**
+
+   ```bash
+   docker-compose up -d --build
+   ```
+4. **Восстановите базы данных:**
+
+   ```bash
+   docker exec -it db_server pg_restore -U postgres -d hatiko /backup/hatiko_server_backup.backup
+   docker exec -it db_bot pg_restore -U postgres -d hatikoBot /backup/hatiko_bot_backup.backup
+   ```
+5. **Запустите сервисы:**
+
+   ```bash
+   docker start server
+   docker start bot
+   ```
+
+## Команды телеграмм бота:
+
+#### Важно!
+
+При первом запуске в белый лист будет добавлен один пользователь - тот, который указан в переменной **ADMIN_ID** в .env файле.
+
+1. **/start** - если Вы добавлены в белый список приложения, то вам предложат войти. Если нет - Вы получите сообщение
+   > У вас нет доступа к приложению
+   >
+2. **/login [токен]** - чтобы выполнить вход используйте эту команду (инструкция по получению токена в разделе "Взаимодействие с API")
+3. **/imei [imie]** - выполнить поиск по IMEI
+4. **/add [ID] [Уровень доступа]** - добавить пользователя в белый список (Уровень доступа: 1-5)
+5. **/delete [ID]** - удалить пользователя из белого списка
+6. **/list [номер страницы]** - посмотреть пользователей в белом списке (по 50 человек на странице)
+
+## Взаимодействие с API
+
+1. **Документация:**
+   Документация собрана на Swagger UI, от туда можно отправлять запросы к серверу
+   Документация доступна по адресу:
+
+   ```curl
+   127.0.0.1:8000/docs
+   ```
+2. **Вход:**
+   Метод: POST /api/auth/login
+   Тело запроса:
+   &nbsp;  login (строка, обязательный) - Имя пользователя или электронная почта
+   &nbsp;  password (строка, обязательный) - Пароль пользователя
+   Тело ответа:
+   &nbsp;  user_id (число)
+   &nbsp;  username (строка)
+   &nbsp;  email (строка)
+   &nbsp;  token (строка)
+   &nbsp;  level_permission (число)
+2. **Регистрация:**
+
+   ### !Важно
+
+   Регистрировать новых пользователей могут только авторизированные пользователи с соответствующим уровнем доступа
+
+   Метод: POST api/auth/register
+   Тело запроса:
+   &nbsp;  username (строка, обязательный) - Имя пользователя
+   &nbsp;  email (строка, обязательный) - Электронная почта пользователя
+   &nbsp;  password (строка, обязательный) - Пароль пользователя
+   Тело ответа:
+   &nbsp;  user_id (число)
+   &nbsp;  username (строка)
+   &nbsp;  email (строка)
+   &nbsp;  token (строка)
+   &nbsp;  level_permission (число)
+3. **Проверка IMEI:**
+   Метод: POST api/imei
+   Тело запроса:
+   &nbsp;  imei (строка, обязательный) - IMEI устройства
+
+В бэкапе базы данных есть два пользователя (логин - пароль):
+
+1. Пользователь с правами регистрации новых пользователей
+   &nbsp; string - stringst
+2. Обычный пользователь
+   &nbsp; string1 - stringst
+
+
+**Для получения токена** отправьте POST запрос на api/login с данными для входа и скопируйте токен

@@ -40,7 +40,7 @@ async def imei_command(msg: Message):
     if user.token is None:
         await msg.answer(
             'Выполните вход с помощью команды ```tg /login [токен]```', 
-            parse_mode='html'
+            parse_mode='MarkdownV2'
         )
         return
     
