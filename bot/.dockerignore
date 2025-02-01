@@ -1,3 +1,2 @@
-**/migration
-alembic.ini
 **/__pycache__/
+logs/*
